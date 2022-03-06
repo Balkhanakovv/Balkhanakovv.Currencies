@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Balkhanakovv.Currencies.Models;
 using Balkhanakovv.Currencies.Services.CurrencyService;
 
 namespace Balkhanakovv.Currencies.Controllers
@@ -16,6 +15,30 @@ namespace Balkhanakovv.Currencies.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult GetCurrencies()
+        {
+            return View();
+        }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public string Curr(string charCode)
+        {
+            var currency = _currenyService?.CurrenciesList?.Currency?.Find(x => x.CharCode == charCode);
+            
+            if (currency != null)
+            {
+                return $"Валюта {charCode}";
+            }
+            else
+            {
+                return $"Такого {charCode} нет";
+            }
         }
     }
 }
