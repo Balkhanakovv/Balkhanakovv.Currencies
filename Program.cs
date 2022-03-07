@@ -8,6 +8,7 @@ builder.Services.AddSingleton<ICurrencyService, CurrencyService>();
 var app = builder.Build();
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
 app.UseRouting();
 
