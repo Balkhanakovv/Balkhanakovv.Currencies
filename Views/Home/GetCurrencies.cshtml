@@ -13,32 +13,32 @@
     @foreach (var curr in Curs.CurrenciesList?.Currency)
     {
         <div class="col-lg-4">
-            <div class="card" id="@(curr.CharCode)_card" style="width: 18rem; height: 10rem; margin: 10px;" >
+            <div class="card" id="@(curr.CharCode)_card" style="width: 18rem; height: 13rem; margin: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">@curr.Name</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Номинал: @curr.Nominal</h6>
                     <p class="card-text">@curr.Value</p>
+
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#@(curr.CharCode)_Modal">
+                        Информация
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="@(curr.CharCode)_Modal" tabindex="-1" aria-labelledby="@(curr.CharCode)_ModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="@(curr.CharCode)_ModalLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    @await Html.PartialAsync("_CurrencyDynamic", curr)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     }
 </div>
-
-<script>
-    $( document ).ready(function() {
-        function clickCard(charCode) {
-            console.log(`${charCode}`);
-
-            $.ajax({
-                url: @Url.Action("Curr", "Home"),
-                type: "POST",
-                data: charCode
-            });
-        }
-
-        $('#USD_card').bind('click', function(){
-            console.log("HELLO");
-        });
-    });    
-</script>
 

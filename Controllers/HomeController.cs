@@ -27,18 +27,9 @@ namespace Balkhanakovv.Currencies.Controllers
             return View();
         }
 
-        public string Curr(string charCode)
+        public ActionResult CurrencyDynamic(string charCode)
         {
-            var currency = _currenyService?.CurrenciesList?.Currency?.Find(x => x.CharCode == charCode);
-            
-            if (currency != null)
-            {
-                return $"Валюта {charCode}";
-            }
-            else
-            {
-                return $"Такого {charCode} нет";
-            }
+            return PartialView();
         }
     }
 }
