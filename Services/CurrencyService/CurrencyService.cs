@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -29,6 +30,16 @@ namespace Balkhanakovv.Currencies.Services.CurrencyService
                     CurrenciesList = (XmlValCurs)serializer.Deserialize(receiveStream);
                 }
             }
+        }
+
+        public List<double> GetWeekRange(string currId)
+        {
+            StringBuilder requestUrl = new StringBuilder("http://www.cbr.ru/scripts/XML_daily.asp");
+            requestUrl.Append($"?date_req1={DateTime.Now.AddDays(-7).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}");
+            requestUrl.Append($"&date_req2={DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}");
+            requestUrl.Append($"&VAL_NM_RQ={"R0101"}");
+
+            return null;
         }
     }
 }
