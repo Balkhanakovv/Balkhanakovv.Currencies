@@ -3,7 +3,7 @@ using Balkhanakovv.Currencies.Services.CurrencyService;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddSingleton<ICurrencyService, CurrencyService>();
+builder.Services.AddTransient<ICurrencyService, CurrencyService>();
 
 var app = builder.Build();
 

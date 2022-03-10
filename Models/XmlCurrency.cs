@@ -44,6 +44,8 @@ namespace Balkhanakovv.Currencies.Models
         /// </summary>
         [XmlAttribute(AttributeName = "ID")]
         public string ID { get; set; }
+
+        public XmlValCursDyn? Records { get; set; }
     }
 
     /// <summary>

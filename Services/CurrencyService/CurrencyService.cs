@@ -32,14 +32,32 @@ namespace Balkhanakovv.Currencies.Services.CurrencyService
             }
         }
 
-        public List<double> GetWeekRange(string currId)
+        public void GetWeekRange(string currId)
         {
             StringBuilder requestUrl = new StringBuilder("http://www.cbr.ru/scripts/XML_daily.asp");
-            requestUrl.Append($"?date_req1={DateTime.Now.AddDays(-7).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}");
+            requestUrl.Append($"?date_req1={DateTime.Now.AddDays(-30).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}");
             requestUrl.Append($"&date_req2={DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}");
-            requestUrl.Append($"&VAL_NM_RQ={"R0101"}");
+            requestUrl.Append($"&VAL_NM_RQ={currId}");
 
-            return null;
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            Encoding.GetEncoding("windows-1254");
+
+            var request = (HttpWebRequest)WebRequest.Create(
+                $"https://www.cbr.ru/scripts/XML_dynamic.asp?date_req1={DateTime.Now.AddDays(-30).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}&date_req2={DateTime.Now.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}&VAL_NM_RQ={currId}"
+            );
+
+            using (var response = (HttpWebResponse)request.GetResponse())
+            {
+                var receiveStream = response.GetResponseStream();
+                var serializer = new XmlSerializer(typeof(XmlValCursDyn));
+
+                if (receiveStream != null)
+                {
+                    var result = (XmlValCursDyn)serializer.Deserialize(receiveStream);
+
+                    CurrenciesList.Currency[CurrenciesList.Currency.FindIndex(x => x.ID == currId)].Records = result;
+                }
+            }
         }
     }
 }

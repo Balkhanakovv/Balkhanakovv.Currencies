@@ -1,9 +1,11 @@
 ﻿@model Balkhanakovv.Currencies.Models.Currency
 
+@{
+    var recLenght = Model.Records.Records.Count;
+}
 
-
-<h3>@Model.Name</h3>
-<h6>@Model.ID</h6>
+<h3>@(Model.Name) (@Model.CharCode)</h3>
+<h6>Номинал: @Model.Nominal</h6>
 
 <div>
   <canvas id="@(Model.CharCode)_Chart"></canvas>
@@ -11,21 +13,26 @@
 
 <script>
   const @(Model.CharCode)_labels = [
-    '01.03.2022',
-    '02.03.2022',
-    '03.03.2022',
-    '04.03.2022',
-    '05.03.2022',
-    '06.03.2022',
+    '@(Model.Records.Records[recLenght-6].Date)',
+    '@(Model.Records.Records[recLenght-5].Date)',
+    '@(Model.Records.Records[recLenght-4].Date)',
+    '@(Model.Records.Records[recLenght-3].Date)',
+    '@(Model.Records.Records[recLenght-2].Date)',
+    '@(Model.Records.Records[recLenght-1].Date)',
   ];
 
   const @(Model.CharCode)_data = {
     labels: @(Model.CharCode)_labels,
     datasets: [{
-      label: 'USD',
+      label: '@(Model.CharCode)',
       backgroundColor: 'rgb(255, 99, 132)',
       borderColor: 'rgb(255, 99, 132)',
-      data: [93.5589, 91.7457, 103.2487, 111.7564, 105.8124, 105.8124],
+      data: [   @(Model.Records.Records[recLenght-6].Value.Replace(',', '.')), 
+                @(Model.Records.Records[recLenght-5].Value.Replace(',', '.')), 
+                @(Model.Records.Records[recLenght-4].Value.Replace(',', '.')), 
+                @(Model.Records.Records[recLenght-3].Value.Replace(',', '.')), 
+                @(Model.Records.Records[recLenght-2].Value.Replace(',', '.')), 
+                @(Model.Records.Records[recLenght-1].Value.Replace(',', '.'))]
     }]
   };
 

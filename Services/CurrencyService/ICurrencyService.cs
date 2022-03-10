@@ -8,6 +8,6 @@ namespace Balkhanakovv.Currencies.Services.CurrencyService
 
         public void GetCurrencies();
 
-        public List<double> GetWeekRange(string currId);
+        public void GetWeekRange(string currId);
     }
 }

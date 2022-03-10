@@ -6,6 +6,10 @@
         Curs.GetCurrencies();
     }
 
+    foreach(var i in Curs.CurrenciesList.Currency)
+    {
+        Curs.GetWeekRange(i.ID);
+    }
     ViewData["Title"] = "Home Page";
 }
 
